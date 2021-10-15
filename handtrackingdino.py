@@ -4,7 +4,7 @@ import time
 import math
 
 
-class handDetector():
+class handDetector:
     def __init__(self, mode=False, maxHands=2, detectioCon=0.5, trackingCon=0.5):
         self.mode = mode
         self.maxHands = maxHands
@@ -12,7 +12,9 @@ class handDetector():
         self.trackingCon = trackingCon
 
         self.mpHands = mp.solutions.hands
-        self.hands = self.mpHands.Hands(self.mode, self.maxHands, self.detectioCon, self.trackingCon)
+        self.hands = self.mpHands.Hands(
+            self.mode, self.maxHands, self.detectioCon, self.trackingCon
+        )
         self.mpDra = mp.solutions.drawing_utils
         self.tipIds = [4, 8, 12, 16, 20]
 
@@ -23,7 +25,9 @@ class handDetector():
         if self.result.multi_hand_landmarks:
             for handLms in self.result.multi_hand_landmarks:
                 if drow:
-                    self.mpDra.draw_landmarks(img, handLms, self.mpHands.HAND_CONNECTIONS)
+                    self.mpDra.draw_landmarks(
+                        img, handLms, self.mpHands.HAND_CONNECTIONS
+                    )
         return img
 
     def findPositon(self, img, handNo=0, draw=True):
@@ -39,7 +43,7 @@ class handDetector():
                     cv2.circle(img, (cx, cy), 15, (255, 0, 255), cv2.FILLED)
         return self.lmList
 
-    def findDistance(self, p1, p2, img, drow = True, r=5, t=3, color=(255, 0,255)):
+    def findDistance(self, p1, p2, img, drow=True, r=5, t=3, color=(255, 0, 255)):
         x1, y1 = self.lmList[p1][1:]
         x2, y2 = self.lmList[p2][1:]
         cx, cy = (x1 + x2) // 2, (y1 + y2) // 2
@@ -51,6 +55,7 @@ class handDetector():
             cv2.circle(img, (x2, y2), r, color, cv2.FILLED)
             cv2.circle(img, (cx, cy), r, color, cv2.FILLED)
         return distance, img, [x1, y1, x2, y2, cx, cy]
+
 
 def main():
     pTime = 0
@@ -68,7 +73,15 @@ def main():
         fps = 1 / (cTime - pTime)
         pTime = cTime
 
-        cv2.putText(img, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_SCRIPT_COMPLEX, 3, (0, 0, 0), 3)
+        cv2.putText(
+            img,
+            str(int(fps)),
+            (10, 70),
+            cv2.FONT_HERSHEY_SCRIPT_COMPLEX,
+            3,
+            (0, 0, 0),
+            3,
+        )
         cv2.imshow("image", img)
         cv2.waitKey(1)
 

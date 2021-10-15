@@ -1,5 +1,4 @@
-
-import requests 
+import requests
 import json
 import sys
 from pprint import pprint
@@ -7,7 +6,7 @@ from pprint import pprint
 # The below 4 lines bring out the value of currency from the api at fixer.io.  I had to register there, the key is unique to me.
 url = "http://data.fixer.io/api/latest?access_key=33ec7c73f8a4eb6b9b5b5f95118b2275"
 data = requests.get(url).text
-data2 = json.loads(data) #brings whether request was successful,timestamp etc
+data2 = json.loads(data)  # brings whether request was successful,timestamp etc
 fx = data2["rates"]
 
 currencies = [

@@ -10,14 +10,15 @@ import yfinance as yf
 import numpy as np
 
 # Download historical data for required stocks
-tickers = ["AMZN","GOOG","MSFT"]
+tickers = ["AMZN", "GOOG", "MSFT"]
 ohlcv_data = {}
 
 # looping over tickers and storing OHLCV dataframe in dictionary
 for ticker in tickers:
-    temp = yf.download(ticker,period='7mo',interval='1d')
-    temp.dropna(how="any",inplace=True)
+    temp = yf.download(ticker, period="7mo", interval="1d")
+    temp.dropna(how="any", inplace=True)
     ohlcv_data[ticker] = temp
+
 
 def volatility(DF):
     "function to calculate annualized volatility of a trading strategy"
@@ -26,5 +27,6 @@ def volatility(DF):
     vol = df["daily_ret"].std() * np.sqrt(252)
     return vol
 
+
 for ticker in ohlcv_data:
-    print("vol for {} = {}".format(ticker,volatility(ohlcv_data[ticker])))
+    print("vol for {} = {}".format(ticker, volatility(ohlcv_data[ticker])))
